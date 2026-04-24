@@ -19,4 +19,8 @@ class AuthRepository{
   bool isLoggedIn(){
     return provider.isLoggedIn();
   }
+
+  Future<void> signUp(String email, String password)async{
+    await provider.signUp(email, password);
+  }
 }

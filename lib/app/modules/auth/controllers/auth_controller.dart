@@ -20,19 +20,40 @@ class AuthController extends GetxController{
   }
 
   Future<void> login()async{
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
-    await repo.login(email, password);
-    isLoggedIn.value = true;
-    // need to add navigation here
-    Get.offAllNamed(Routes.Home);
+    try{
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
+      await repo.login(email, password);
+      isLoggedIn.value = true;
+      // need to add navigation here
+      Get.offAllNamed(Routes.Home);
+    }
+    catch(e){
+      Get.snackbar("Login error: ",e.toString());
+    }
   }
 
   Future<void> logout()async{
-    await repo.logout();
-    isLoggedIn.value = false;
-    // need to add navigation here
-    Get.offAllNamed(Routes.Login);
+    try{
+      await repo.logout();
+      isLoggedIn.value = false;
+      // need to add navigation here
+      Get.offAllNamed(Routes.Login);
+    }
+    catch(e){
+      Get.snackbar("Logout error: ", e.toString());
+    }
+  }
+
+  Future<void> signUp()async{
+    try{
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+
+      await repo.signUp(email, password);
+    }catch(e){
+      Get.snackbar("Signup error: ", e.toString());
+    }
   }
 
   @override void onClose() {
